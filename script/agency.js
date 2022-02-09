@@ -16,6 +16,39 @@
             this.footer();
         }
         header(){
+            //스크롤 이벤트
+            //윈도우 스크롤탑 값이 0이면 -> 높이 72(기본,default): 추가된 클래스 모두 삭제
+            //윈도우 스크롤탑 값이 0이 아니면 -> 높이 60 : 클래스 추가해서 높이 60으로 만듦
+            let newTop = $(window).scrollTop();
+            let oldTop = newTop;
+            let result = '';
+            const header = $('#header');
+
+            $(window).scroll(()=>{
+                if( $(window).scrollTop()==0){
+                    header.removeClass('addH60');
+                    header.removeClass('addShow');
+                    header.removeClass('addHide');
+                }
+                else{
+                    header.addClass('addH60');
+                    //위 아래 방향 설정
+                    newTop = $(window).scrollTop();
+
+                    result = oldTop-newTop>0? 'UP':'DOWN';
+
+                    if( result=='UP'){
+                        header.addClass('addShow');
+                        header.removeClass('addHide');
+                    }
+                    if( result=='DOWN'){
+                        header.addClass('addHide');
+                        header.removeClass('addShow');
+                    }
+                    oldTop = newTop;
+                }
+            });
+
             //메인버튼 이벤트
             const mainBtn = $('.main-btn');
             const sub = $('.sub');
